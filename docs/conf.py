@@ -42,7 +42,11 @@ autodoc_mock_imports = ['fabfile',
                         'scipy.signal',
                         'scipy.sparse',
                         'scipy.stats',
-                        'tornpsql']
+                        'tornpsql',
+                        'pyImagingMSpec',
+                        'cpyImagingMSpec',
+                        'pyMSpec',
+                        'cpyMSpec']
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
