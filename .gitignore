@@ -1,4 +1,5 @@
 .cache
+.vscode
 *.pyc
 .idea
 *.pkl

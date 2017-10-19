@@ -8,6 +8,7 @@ from sm.engine.errors import JobFailedError
 
 MAX_MZ_VALUE = 10**5
 MAX_INTENS_VALUE = 10**12
+ABS_MZ_TOLERANCE_DA = 0.002
 
 
 def _check_spectra_quality(spectra_sample):
@@ -57,8 +58,8 @@ def _define_mz_bounds(mz_grid, workload_per_mz, sp_workload_per_mz, n=32):
 def _create_mz_segments(mz_bounds, ppm):
     mz_buckets = []
     for i, (l, r) in enumerate(zip([0] + mz_bounds, mz_bounds + [sys.float_info.max])):
-        l -= l * ppm * 1e-6
-        r += r * ppm * 1e-6
+        l -= ABS_MZ_TOLERANCE_DA #l * ppm * 1e-6
+        r += ABS_MZ_TOLERANCE_DA #r * ppm * 1e-6
         mz_buckets.append((l, r))
     return mz_buckets
 
@@ -85,8 +86,8 @@ def _gen_iso_images(spectra_it, sp_indexes, sf_peak_df, nrows, ncols, ppm, min_p
 
         # -1, + 1 are needed to extend sf_peak_mz range so that it covers 100% of spectra
         sf_peak_df = sf_peak_df[(sf_peak_df.mz >= sp_df.mz.min()-1) & (sf_peak_df.mz <= sp_df.mz.max()+1)]
-        lower = sf_peak_df.mz.map(lambda mz: mz - mz*ppm*1e-6)
-        upper = sf_peak_df.mz.map(lambda mz: mz + mz*ppm*1e-6)
+        lower = sf_peak_df.mz.map(lambda mz: mz - ABS_MZ_TOLERANCE_DA) #mz*ppm*1e-6)
+        upper = sf_peak_df.mz.map(lambda mz: mz + ABS_MZ_TOLERANCE_DA) #mz*ppm*1e-6)
         lower_idx = np.searchsorted(sp_df.mz, lower, 'l')
         upper_idx = np.searchsorted(sp_df.mz, upper, 'r')
 
@@ -178,4 +179,3 @@ def compute_sf_images(sc, ds_reader, sf_peak_df, ppm):
     iso_sf_images = gen_iso_sf_images(iso_peak_images, shape=ds_reader.get_dims())
 
     return iso_sf_images
-
