@@ -53,9 +53,9 @@ class LocalWorkDir(object):
         self.ds_path = join(base_path, ds_id)
 
     @property
-    def imzml_path(self):
-        imzmls = [fn for fn in listdir(self.ds_path) if re.search(r'\.imzml$', fn, re.IGNORECASE)]
-        return join(self.ds_path, imzmls[0]) if imzmls else ''
+    def mzml_path(self):
+        mzmls = [fn for fn in listdir(self.ds_path) if re.search(r'\.mzml$', fn, re.IGNORECASE)]
+        return join(self.ds_path, mzmls[0]) if mzmls else ''
 
     @property
     def txt_path(self):

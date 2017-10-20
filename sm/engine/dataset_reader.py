@@ -2,7 +2,7 @@ import json
 import numpy as np
 import logging
 
-from sm.engine.imzml_txt_converter import ImzmlTxtConverter
+from sm.engine.mzml_txt_converter import MzmlTxtConverter
 from sm.engine.util import SMConfig, read_json
 from sm.engine.db import DB
 from sm.engine.es_export import ESExporter
@@ -99,10 +99,10 @@ class DatasetReader(object):
     def copy_convert_input_data(self):
         if not self._wd_manager.exists(self._wd_manager.txt_path):
             self._wd_manager.copy_input_data(self.input_path)
-            imzml_converter = ImzmlTxtConverter(self._wd_manager.local_dir.imzml_path,
+            mzml_converter = MzmlTxtConverter(self._wd_manager.local_dir.mzml_path,
                                                 self._wd_manager.local_dir.txt_path,
                                                 self._wd_manager.local_dir.coord_path)
-            imzml_converter.convert()
+            mzml_converter.convert()
 
             if not self._wd_manager.local_fs_only:
                 self._wd_manager.upload_to_remote()
