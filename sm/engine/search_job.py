@@ -141,7 +141,7 @@ class SearchJob(object):
     def run(self, ds):
         """ Entry point of the engine. Molecule search is completed in several steps:
             * Copying input data to the engine work dir
-            * Conversion input data (imzML+ibd) to plain text format. One line - one spectrum data
+            * Conversion input data (mzML+ibd) to plain text format. One line - one spectrum data
             * Generation and saving to the database theoretical peaks for all formulas from the molecule database
             * Molecules search. The most compute intensive part. Spark is used to run it in distributed manner.
             * Saving results (isotope images and their metrics of quality for each putative molecule) to the database

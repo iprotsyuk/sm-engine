@@ -65,7 +65,7 @@ class SimpleMzmlParser(object):
     def __init__(self, filename):
         self.experiment = MSExperiment()
         file_handler = FileHandler()
-        file_handler.loadExperiment(filename, self.experiment)
+        file_handler.loadExperiment(filename.encode(), self.experiment)
 
         self.coordinates = [(5 * i, 1, 1) for i in range(1, self.experiment.size() + 1)]
 
@@ -73,12 +73,12 @@ class SimpleMzmlParser(object):
         return self.experiment[idx].get_peaks()
 
 class MzmlTxtConverter(object):
-    """ Converts spectra from imzML/ibd to plain text files for later access from Spark
+    """ Converts spectra from mzML/ibd to plain text files for later access from Spark
 
     Args
     ----
     mzml_path : str
-        Path to an imzML file
+        Path to an mzML file
     txt_path : str
         Path to store spectra in plain text format
     coord_path : str
@@ -126,7 +126,7 @@ class MzmlTxtConverter(object):
         print_progress : bool
             Whether or not to print progress information to stdout
         """
-        logger.info("ImzML -> Txt conversion")
+        logger.info("mzML -> Txt conversion")
         self.preprocess = preprocess
 
         if not exists(self.txt_path):
